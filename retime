@@ -50,7 +50,7 @@ There is NO WARRANTY, to the extent permitted by law.
 Written by Thomas Voss; see
 <https://www.github.com/Mango0x45/retime>
 EOF
-    exit 0 ;;
+    exit 0
 }
 
 # Check flags
