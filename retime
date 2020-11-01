@@ -66,7 +66,7 @@ while getopts ":bcf:hv-:" FLAG; do
                 copy)
                     COPY=true ;;
                 fps)
-                    FRAME_RATE=$(eval echo \${$OPTIND}) ;;
+                    FRAME_RATE=$(eval echo \$$OPTIND) ;;
                 fps=*)
                     FRAME_RATE=$(echo "$OPTARG" | cut -d "=" -f 2) ;;
                 version)
@@ -159,7 +159,7 @@ rm yt_debug_info
 
 # Loop if in bulk retime mode
 if [ "$BULK_RETIME" = true ]; then
-    [ "$COPY" = true ] && retime -bc || retime -b
+    ([ "$COPY" = true ] && retime -bc) || retime -b
 fi
 
 exit 0
