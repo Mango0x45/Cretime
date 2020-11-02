@@ -58,6 +58,8 @@ EOF
 check_fps () {
     if echo "$1" | grep -Eq "^[0-9]+$"; then
         FRAME_RATE="$1"
+    elif [ -z "$1" ]; then
+        no_option
     else
         exit 3
     fi
