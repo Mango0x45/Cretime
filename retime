@@ -143,11 +143,10 @@ else
 fi
 
 # Echo the final time and copy a mod note to clipboard
-echo "Final Time: ${DURATION}"
+echo "Final Time: $DURATION"
 if [ "$COPY" = true ]; then
     MOD_NOTE=$(printf "Mod Note: Retimed (Start: Frame %s, End: Frame %s, FPS: %s, Total Time: %s)" "$START" "$END" "$FRAME_RATE" "$DURATION")
-    OS=$(uname)
-    if [ "$OS" = "Darwin" ]; then
+    if [ "$(uname)" = "Darwin" ]; then
         echo "$MOD_NOTE" | pbcopy
     else
         echo "$MOD_NOTE" | xclip -selection clipboard || echo "$OUTPUT" | xsel -ib
