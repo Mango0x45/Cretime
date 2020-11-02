@@ -30,8 +30,9 @@ Miscellaneous:
 
 Exit status:
  0  if OK,
- 1  if invalid flag,
- 2  if invalid youtube debug info.
+ 1  if invalid flag or missing option,
+ 2  if invalid youtube debug info,
+ 3  if invalid fps.
 
 Report bugs to: thomasvoss@live.com
 Source code: <https://www.github.com/Mango0x45/retime>
@@ -42,7 +43,7 @@ EOF
 # Version information
 version_info () {
     cat << EOF
-retime v1.0
+retime v1.1
 Licence MIT: <https://mit-license.org/>
 This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law.
@@ -51,6 +52,21 @@ Written by Thomas Voss; see
 <https://www.github.com/Mango0x45/retime>
 EOF
     exit 0
+}
+
+# Ensure the entered FPS is valid
+check_fps () {
+    if echo "$1" | grep -Eq "^[0-9]+$"; then
+        FRAME_RATE="$1"
+    else
+        exit 3
+    fi
+}
+
+no_option () {
+    echo "retime: option requires an argument -- '$OPTARG'
+Try 'retime --help' for more information."
+    exit 1
 }
 
 # Check flags
@@ -66,9 +82,9 @@ while getopts ":bcf:hv-:" FLAG; do
                 copy)
                     COPY=true ;;
                 fps)
-                    FRAME_RATE=$(eval echo \$$OPTIND) ;;
+                    check_fps "$(eval echo \$$OPTIND)" ;;
                 fps=*)
-                    FRAME_RATE=$(echo "$OPTARG" | cut -d "=" -f 2) ;;
+                    check_fps "$(echo "$OPTARG" | cut -d "=" -f 2)" ;;
                 version)
                     version_info ;;
                 *)
@@ -81,11 +97,13 @@ while getopts ":bcf:hv-:" FLAG; do
         c)
             COPY=true ;;
         f)
-            FRAME_RATE="$OPTARG" ;;
+            check_fps "$OPTARG" ;;
         h)
             get_help ;;
         v)
             version_info ;;
+        :)
+            no_option ;;
         ?)
             invalid_flag ;;
     esac
