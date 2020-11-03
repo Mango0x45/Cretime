@@ -32,7 +32,7 @@ Exit status: \n\
 Report bugs to: thomasvoss@live.com \n\
 Source code: <https://www.github.com/Mango0x45/retime>"
 #define VERSION "\
-cretime v1.1 \n\
+cretime v1.2 \n\
 Licence MIT: <https://mit-license.org/> \n\
 This is free software: you are free to change and redistribute it. \n\
 There is NO WARRANTY, to the extent permitted by law. \n\
@@ -137,7 +137,7 @@ int main(int argc, char **argv)
     _Bool mod_message = 0;
     int flag;
     int option_index = 0;
-    unsigned char fps;
+    unsigned char fps = 0;
     static const char short_options[] = ":bf:mhv";
     static const struct option long_options[] =
     {
@@ -197,6 +197,34 @@ int main(int argc, char **argv)
                 printf("cretime: invalid option -- '%c'\nTry 'cretime --help' for more information.\n", optopt);
                 exit(1);
         }
+    }
+
+    if (fps == 0)
+    {
+        fputs("Video Framerate: ", stdout);
+
+        size_t i = 0;
+        char *temp = malloc(1);
+
+        while (1)
+        {
+            temp[i] = getchar();
+
+            if (temp[i] == '\n')
+            {
+                temp[i] = '\0';
+                break;
+            }
+
+            temp = realloc(temp, ++i + 1);
+        }
+
+        for (size_t j = 0; j < 1; j++)
+            if (!isdigit(temp[j]))
+                invalid_fps();
+
+        fps = (char) str_to_float(temp);
+        free(temp);
     }
 
     // Prompt the user for the start and end of the run
