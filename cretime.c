@@ -32,7 +32,7 @@ Exit status: \n\
 Report bugs to: thomasvoss@live.com \n\
 Source code: <https://www.github.com/Mango0x45/retime>"
 #define VERSION "\
-cretime v1.0 \n\
+cretime v1.1 \n\
 Licence MIT: <https://mit-license.org/> \n\
 This is free software: you are free to change and redistribute it. \n\
 There is NO WARRANTY, to the extent permitted by law. \n\
@@ -133,8 +133,8 @@ char *format_time(const float time)
 // Main function
 int main(int argc, char **argv)
 {
-    _Bool bulk_retime;
-    _Bool mod_message;
+    _Bool bulk_retime = 0;
+    _Bool mod_message = 0;
     int flag;
     int option_index = 0;
     unsigned char fps;
