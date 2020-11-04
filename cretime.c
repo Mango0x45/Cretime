@@ -138,8 +138,8 @@ int main(int argc, char **argv)
     int flag;
     int option_index = 0;
     unsigned char fps = 0;
-    static const char short_options[] = ":bf:mhv";
-    static const struct option long_options[] =
+    const char short_options[] = ":bf:mhv";
+    const struct option long_options[] =
     {
         {"bulk-retime", no_argument,        0,   'b'},
         {"fps",         required_argument,  0,   'f'},
