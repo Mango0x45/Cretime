@@ -32,7 +32,7 @@ Exit status: \n\
 Report bugs to: thomasvoss@live.com \n\
 Source code: <https://www.github.com/Mango0x45/retime>"
 #define VERSION "\
-cretime v1.2 \n\
+cretime v1.3 \n\
 Licence MIT: <https://mit-license.org/> \n\
 This is free software: you are free to change and redistribute it. \n\
 There is NO WARRANTY, to the extent permitted by law. \n\
@@ -164,6 +164,7 @@ int main(int argc, char **argv)
                 break;
 
             case 'f':
+                // Make sure the fps is numeric
                 for (int i = 0, len = strlen(optarg); i < len; i++)
                     if (!isdigit(optarg[i]))
                         invalid_fps();
@@ -199,6 +200,7 @@ int main(int argc, char **argv)
         }
     }
 
+LOOP:
     if (fps == 0)
     {
         fputs("Video Framerate: ", stdout);
@@ -206,6 +208,7 @@ int main(int argc, char **argv)
         size_t i = 0;
         char *temp = malloc(1);
 
+        // Get user input
         while (1)
         {
             temp[i] = getchar();
@@ -233,6 +236,8 @@ int main(int argc, char **argv)
     puts("Paste the debug info of the end of the run:");
     size_t end_time = trunc(get_time() * fps);
 
+    system("clear");
+
     // Calculate and output the run duration
     float duration = (end_time - start_time) / (float) fps;
     char *formatted_duration = format_time(duration);
@@ -243,6 +248,14 @@ int main(int argc, char **argv)
         printf("Final Time: %s\n", formatted_duration);
 
     free(formatted_duration);
+
+    // Loop when bulk_retime is true
+    if (bulk_retime)
+    {
+        fps = 0;
+        while ((getchar()) != '\n');
+        goto LOOP;
+    }
 
     return 0;
 }
