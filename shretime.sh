@@ -6,23 +6,24 @@
 
 # Invalid flag error message
 invalid_flag () {
-    echo "retime: invalid option -- '$OPTARG'
-Try 'retime --help' for more information."
+    echo "shretime: invalid option -- '$OPTARG'
+Try 'shretime --help' for more information." 1>&2
     exit 1
 }
 
 # Help message
 get_help () {
     cat << EOF
-Usage: retime [OPTIONS]...
+Usage: shretime [OPTIONS]...
 Retime a segment of a youtube video.
-Example: retime -cf 30
+Example: shretime -cf 30
 
 Functionality:
   -b, --bulk-retime         bulk retime videos;
                               the b and c flags are preserved
   -c, --copy                copy a mod message to the clipboard
   -f, --fps=FPS             set the FPS of the video being retimed
+  -m, --mod-note            output a mod retime note as opposed to the end duration
 
 Miscellaneous:
   -h, --help                display this help text and exit
@@ -43,7 +44,7 @@ EOF
 # Version information
 version_info () {
     cat << EOF
-retime v1.1
+shretime v1.2
 Licence MIT: <https://mit-license.org/>
 This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law.
@@ -67,12 +68,12 @@ check_fps () {
 
 no_option () {
     echo "retime: option requires an argument -- '$OPTARG'
-Try 'retime --help' for more information."
+Try 'retime --help' for more information." 1>&2
     exit 1
 }
 
 # Check flags
-while getopts ":bcf:hv-:" FLAG; do
+while getopts ":-:bcf:hmv" FLAG; do
     # Parse long arguments
     case "$FLAG" in
         -)
@@ -87,6 +88,8 @@ while getopts ":bcf:hv-:" FLAG; do
                     check_fps "$(eval echo \$$OPTIND)" ;;
                 fps=*)
                     check_fps "$(echo "$OPTARG" | cut -d "=" -f 2)" ;;
+                mod-note)
+                    SHOW_MOD_NOTE=true ;;
                 version)
                     version_info ;;
                 *)
@@ -102,6 +105,8 @@ while getopts ":bcf:hv-:" FLAG; do
             check_fps "$OPTARG" ;;
         h)
             get_help ;;
+        m)
+            SHOW_MOD_NOTE=true ;;
         v)
             version_info ;;
         :)
@@ -163,13 +168,19 @@ else
 fi
 
 # Echo the final time and copy a mod note to clipboard
-echo "Final Time: $DURATION"
+if [ "$SHOW_MOD_NOTE" = true ]; then
+    OUTPUT="Mod Note: Retimed (Start: Frame $START, End: Frame $END, FPS: $FRAME_RATE, Total Time: $DURATION)"
+else
+    OUTPUT="Final Time: $DURATION"
+fi
+
+echo $OUTPUT
+
 if [ "$COPY" = true ]; then
-    MOD_NOTE=$(printf "Mod Note: Retimed (Start: Frame %s, End: Frame %s, FPS: %s, Total Time: %s)" "$START" "$END" "$FRAME_RATE" "$DURATION")
     if [ "$(uname)" = "Darwin" ]; then
-        echo "$MOD_NOTE" | pbcopy
+        echo "$OUTPUT" | pbcopy
     else
-        echo "$MOD_NOTE" | xclip -selection clipboard || echo "$OUTPUT" | xsel -ib
+        echo "$OUTPUT" | xclip -selection clipboard || echo "$OUTPUT" | xsel -ib
     fi
 fi
 
