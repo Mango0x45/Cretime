@@ -41,13 +41,6 @@ Written by Thomas Voss; see \n\
 <https://www.github.com/Mango0x45/retime>"
 
 
-// Print a warning and exit
-void invalid_fps(void)
-{
-    puts("cretime: 'fps' option must be a whole number from 1 to 60");
-    exit(3);
-}
-
 // Convert a float string to a float
 float str_to_float(const char *str_time)
 {
@@ -73,6 +66,30 @@ float str_to_float(const char *str_time)
         time = time + (str_time[i++] - '0') / pow(10, sig_fig++);
 
     return time;
+}
+
+// Print a warning and exit
+void invalid_fps(void)
+{
+    fputs("cretime: 'fps' option must be a whole number from 1 to 60\n", stderr);
+    exit(3);
+}
+
+// Make sure the users fps is valid
+char check_fps(char *string)
+{
+    // Make sure fps is numeric
+    for (int i = 0, len = strlen(string); i < len; i++)
+        if (!isdigit(string[i]))
+            invalid_fps();
+
+    char fps = (char) str_to_float(string);
+
+    // Make sure fps is within the correct range
+    if (fps > 60 || fps < 1)
+        invalid_fps();
+
+    return fps;
 }
 
 // Take YT debug info JSON as input and return the cmt value
@@ -141,11 +158,11 @@ int main(int argc, char **argv)
     const char short_options[] = ":bf:mhv";
     const struct option long_options[] =
     {
-        {"bulk-retime", no_argument,        0,   'b'},
-        {"fps",         required_argument,  0,   'f'},
-        {"mod-note",    no_argument,        0,   'm'},
-        {"help",        no_argument,        0,   'h'},
-        {"version",     no_argument,        0,   'v'},
+        {"bulk-retime", no_argument,        NULL,   'b'},
+        {"fps",         required_argument,  NULL,   'f'},
+        {"mod-note",    no_argument,        NULL,   'm'},
+        {"help",        no_argument,        NULL,   'h'},
+        {"version",     no_argument,        NULL,   'v'},
         {0, 0, 0, 0}
     };
 
@@ -165,15 +182,7 @@ int main(int argc, char **argv)
 
             case 'f':
                 // Make sure the fps is numeric
-                for (int i = 0, len = strlen(optarg); i < len; i++)
-                    if (!isdigit(optarg[i]))
-                        invalid_fps();
-
-                fps = (char) str_to_float(optarg);
-
-                if (fps > 60 || fps < 1)
-                    invalid_fps();
-
+                fps = check_fps(optarg);
                 break;
 
             case 'm':
@@ -181,22 +190,22 @@ int main(int argc, char **argv)
                 break;
 
             case 'h':
-                puts(HELP);
-                exit(0);
+                fputs(HELP, stderr);
+                return EXIT_SUCCESS;
 
             case 'v':
-                puts(VERSION);
-                exit(0);
+                fputs(VERSION, stderr);
+                return EXIT_SUCCESS;
 
             default:
                 if (optopt == 'f')
                 {
-                    puts("cretime: option requires an argument -- 'f'\nTry 'cretime --help' for more information");
+                    fputs("cretime: option requires an argument -- 'f'\nTry 'cretime --help' for more information", stderr);
                     exit(3);
                 }
 
-                printf("cretime: invalid option -- '%c'\nTry 'cretime --help' for more information.\n", optopt);
-                exit(1);
+                fprintf(stderr, "cretime: invalid option -- '%c'\nTry 'cretime --help' for more information.\n", optopt);
+                return EXIT_FAILURE;
         }
     }
 
@@ -222,11 +231,8 @@ LOOP:
             temp = realloc(temp, ++i + 1);
         }
 
-        for (size_t j = 0; j < 1; j++)
-            if (!isdigit(temp[j]))
-                invalid_fps();
+        fps = check_fps(temp);
 
-        fps = (char) str_to_float(temp);
         free(temp);
     }
 
@@ -257,5 +263,5 @@ LOOP:
         goto LOOP;
     }
 
-    return 0;
+    return EXIT_SUCCESS;
 }
