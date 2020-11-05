@@ -8,6 +8,10 @@
 
 // 14 is the max length of a time that can be input into speedrun.com, +1 for '\0'
 #define FTIME_BUF 15
+// Exit status
+#define BAD_YT_DEBUG 2
+#define BAD_FPS 3
+// Long text I don't wanna put in my code
 #define HELP "\
 Usage: cretime [OPTIONS]... \n\
 Retime a segment of a youtube video. \n\
@@ -72,7 +76,7 @@ float str_to_float(const char *str_time)
 void invalid_fps(void)
 {
     fputs("cretime: 'fps' option must be a whole number from 1 to 60\n", stderr);
-    exit(3);
+    exit(BAD_FPS);
 }
 
 // Make sure the users fps is valid
@@ -114,7 +118,7 @@ float get_time(void)
 
     // Keep splitting until the cmt value is found
     while (strcmp("cmt", time) != 0)
-       time = strtok(NULL, "\"");
+        time = strtok(NULL, "\"");
 
     // Gets the cmt value, find better way maybe
     time = strtok(NULL, "\"");
@@ -201,7 +205,7 @@ int main(int argc, char **argv)
                 if (optopt == 'f')
                 {
                     fputs("cretime: option requires an argument -- 'f'\nTry 'cretime --help' for more information", stderr);
-                    exit(3);
+                    return BAD_FPS;
                 }
 
                 fprintf(stderr, "cretime: invalid option -- '%c'\nTry 'cretime --help' for more information.\n", optopt);
