@@ -34,7 +34,7 @@ Exit status: \n\
  3  if invalid fps. \n\
  \n\
 Report bugs to: thomasvoss@live.com \n\
-Source code: <https://www.github.com/Mango0x45/retime>"
+Source code: <https://www.github.com/Mango0x45/retime>\n"
 #define VERSION "\
 cretime v1.3 \n\
 Licence MIT: <https://mit-license.org/> \n\
@@ -42,7 +42,7 @@ This is free software: you are free to change and redistribute it. \n\
 There is NO WARRANTY, to the extent permitted by law. \n\
 \n\
 Written by Thomas Voss; see \n\
-<https://www.github.com/Mango0x45/retime>"
+<https://www.github.com/Mango0x45/retime>\n"
 
 
 // Convert a float string to a float
@@ -204,7 +204,7 @@ int main(int argc, char **argv)
             default:
                 if (optopt == 'f')
                 {
-                    fputs("cretime: option requires an argument -- 'f'\nTry 'cretime --help' for more information", stderr);
+                    fputs("cretime: option requires an argument -- 'f'\nTry 'cretime --help' for more information\n", stderr);
                     return BAD_FPS;
                 }
 
@@ -216,7 +216,7 @@ int main(int argc, char **argv)
 LOOP:
     if (fps == 0)
     {
-        fputs("Video Framerate: ", stdout);
+        fputs("Video Framerate: ", stderr);
 
         size_t i = 0;
         char *temp = malloc(1);
@@ -241,9 +241,9 @@ LOOP:
     }
 
     // Prompt the user for the start and end of the run
-    puts("Paste the debug info of the start of the run:");
+    fputs("Paste the debug info of the start of the run:\n", stderr);
     size_t start_time = trunc(get_time() * fps);
-    puts("Paste the debug info of the end of the run:");
+    fputs("Paste the debug info of the end of the run:\n", stderr);
     size_t end_time = trunc(get_time() * fps);
 
     system("clear");
