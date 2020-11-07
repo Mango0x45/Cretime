@@ -32,8 +32,12 @@ After that, you will be prompted to paste the youtube debug info of the video fo
 Then do the same for the end frame.
 Finally the end time or a mod note will be output depending on if you used the -m or --mod-note flags.
 
-If you want to have the mod note automatically copied to the clipboard, you will need to copy the output manually.
+If you want to have the mod note automatically copied to the clipboard, you can run
+    echo $(cretime) | xclip -selection clipboard
+If you are not using xclip, just pipe the output into which ever program you do use, such as xsel, or if you're a mac user, pbcopy.
 Alternatively, you can use the shretime.sh shell script included in the repo which does have a -c/--copy option to copy to the clipboard, but it's not as convenient when inputting the YT debug info.
+If you want to bulk retime while copying to the clipboard, you can run
+    while true; do echo $(cretime) | xclip -selection clipboard; done
 
 
 Flags
