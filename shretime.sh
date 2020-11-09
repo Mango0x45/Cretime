@@ -36,7 +36,7 @@ Exit status:
  3  if invalid fps.
 
 Report bugs to: thomasvoss@live.com
-Source code: <https://www.github.com/Mango0x45/retime>
+Source code: <https://www.github.com/Mango0x45/Retime>
 EOF
     exit 0
 }
@@ -45,12 +45,12 @@ EOF
 version_info () {
     cat << EOF
 shretime v1.2
-Licence MIT: <https://mit-license.org/>
+Licence Unlicense: <https://unlicense.org/>
 This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law.
 
 Written by Thomas Voss; see
-<https://www.github.com/Mango0x45/retime>
+<https://www.github.com/Mango0x45/Retime>
 EOF
     exit 0
 }

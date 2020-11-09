@@ -34,15 +34,15 @@ Exit status: \n\
  3  if invalid fps. \n\
  \n\
 Report bugs to: thomasvoss@live.com \n\
-Source code: <https://www.github.com/Mango0x45/retime>\n"
+Source code: <https://www.github.com/Mango0x45/Retime>\n"
 #define VERSION "\
 cretime v1.3 \n\
-Licence BSD-3-Clause License: <https://opensource.org/licenses/BSD-3-Clause> \n\
+Licence Unlicense: <https://unlicense.org> \n\
 This is free software: you are free to change and redistribute it. \n\
 There is NO WARRANTY, to the extent permitted by law. \n\
 \n\
 Written by Thomas Voss; see \n\
-<https://www.github.com/Mango0x45/retime>\n"
+<https://www.github.com/Mango0x45/Retime>\n"
 
 
 // Convert a float string to a float
