@@ -123,10 +123,9 @@ if [ -z "$FRAME_RATE" ]; then
 fi
 
 # Create a new text file to write the debug info to
-[ -z "$EDITOR" ] && EDITOR="nano"
 echo "Paste the youtube debug info for the start of the video segment,
 and then paste the debug info for the end of the video segment underneath" > yt_debug_info
-$EDITOR yt_debug_info
+${EDITOR:-nano} yt_debug_info
 
 # Ensure the YT debug info is valid
 if [ "$(grep -c "cmt" yt_debug_info)" -ne 2 ]; then
