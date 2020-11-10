@@ -179,7 +179,8 @@ if [ "$COPY" = true ]; then
     if [ "$(uname)" = "Darwin" ]; then
         echo "$OUTPUT" | pbcopy
     else
-        echo "$OUTPUT" | xclip -selection clipboard || echo "$OUTPUT" | xsel -ib
+        echo "$OUTPUT" | xclip -selection clipboard ||
+            echo "$OUTPUT" | xsel -ib
     fi
 fi
 
@@ -188,7 +189,11 @@ rm yt_debug_info
 
 # Loop if in bulk retime mode
 if [ "$BULK_RETIME" = true ]; then
-    ([ "$COPY" = true ] && retime -bc) || retime -b
+    if [ "$SHOW_MOD_NOTE" = true ]; then
+        ([ "$COPY" = true ] && retime -bcm) || retime -bm
+    else
+        ([ "$COPY" = true ] && retime -bc) || retime -b
+    fi
 fi
 
 exit 0
