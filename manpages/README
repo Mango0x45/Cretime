@@ -1,0 +1,21 @@
+              __  __
+             |  \/  |  __ _  _ __   _ __    __ _   __ _   ___  ___
+             | |\/| | / _` || '_ \ | '_ \  / _` | / _` | / _ \/ __|
+             | |  | || (_| || | | || |_) || (_| || (_| ||  __/\__ \
+             |_|  |_| \__,_||_| |_|| .__/  \__,_| \__, | \___||___/
+                                   |_|            |___/
+
+Overview
+========
+This directory contains the manpages for the cretime and shretime programs. You can view a manpage with the following command:
+    man ./path/to/manpage
+For example:
+    man ./Retime/manpages/cretime.1
+
+Alternatively, if you would like to be able to call the manpages directly with
+    man cretime
+    man shretime
+you can simply copy the manpages to one of the following directories:
+    /usr/share/man/man1/
+    /usr/local/man/man1/
+    /usr/local/share/man/man1/

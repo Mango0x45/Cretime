@@ -1,0 +1,72 @@
+.TH CRETIME 1 2020-11-09 GNU
+
+.SH NAME
+cretime \- retime (YouTube) speedruns
+
+.SH SYNOPSIS
+.B cretime
+[\fIOPTION\fR]...
+.br
+.B cretime
+[\fIOPTION\fR]... \fB\-f \fIFPS\fR
+
+.SH DESCRIPTION
+.B cretime
+is a command line utility written in C.
+It acts as a parser for YouTube's video debug info to accurately time speedruns to the frame.
+
+.SH EXAMPLES
+.TP
+.BI cretime\ \-bm
+Run the program in an infinite loop, retiming runs in succession until the program is quit.
+The run duration for all the runs retimed is also replaced with a mod note.
+.TP
+\fBcretime \-f \fI30\fR
+Retime a run with a video framerate of 30 frames per second. This skips the programs prompt for the video framerate.
+
+.SH OPTIONS
+.SS General options
+.TP
+.BR \-b ", " \-\-bulk\-retime
+Loop the program after retiming a run allowing for multiple runs to be retimed in succession.
+If this flag is set, only the \-b and \-m flags will carry over.
+.TP
+.BR \-f ", " \-\-fps\fR=\fIFPS\fR
+Specify the FPS of the video, skipping the prompt.
+.TP
+.BR \-m ", " \-\-mod\-note
+Output a mod note after retiming a run as opposed to simply the end duration of the run.
+.SS Getting help
+.TP
+.BR \-h ", " \-\-help
+Display program help information.
+.TP
+.BR \-v ", " \-\-version
+Display program version information.
+
+.SH EXIT STATUS
+.TP
+.B 0
+Successful program execution.
+.TP
+.B 1
+Invalid flag, or missing option.
+.TP
+.B 2
+Invalid YouTube debug info.
+.TP
+.B 3
+Invalid video FPS.
+
+.SH AUTHOR
+Written by Thomas A. Voss.
+
+.SH REPORTING BUGS
+Contact the email <thomasvoss@live.com>
+
+.SH COPYRIGHT
+This is free and unencumbered software released into the public domain.
+For more information, please refer to <http://unlicense.org/>
+
+.SH SEE ALSO
+Program source code <https://www.github.com/Mango0x45/Retime>
