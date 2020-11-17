@@ -21,7 +21,7 @@ Example: shretime -cf 30
 Functionality:
   -b, --bulk-retime         bulk retime videos;
                               the b and c flags are preserved
-  -c, --copy                copy a mod message to the clipboard
+  -c, --copy                copy the output to the clipboard
   -f, --fps=FPS             set the FPS of the video being retimed
   -m, --mod-note            output a mod retime note as opposed to the end duration
 
