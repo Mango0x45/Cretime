@@ -21,7 +21,7 @@ Alternatively, you can compile it with this command:
 
 
 Usage
-========
+=====
 If cretime is in your PATH, just run
     cretime [OPTIONS]...
 and if it is not in your PATH, you can run
