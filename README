@@ -13,7 +13,10 @@ Due to it's use of getopt to parse command line options, this doesn't work on Wi
 
 Compilation
 ===========
-You can compile cretime.c with gcc by entering the following command:
+You can compile cretime.c with gcc by entering the one of the following commands (depending on which program you have):
+    sudo make install
+    doas make install
+Alternatively, you can compile it with this command:
     gcc -o cretime cretime.c -lm
 
 
