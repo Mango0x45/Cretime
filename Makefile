@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-O3 -lm -std=c99 -pedantic -Wall -Wextra -Wmissing-prototypes -Wstrict-prototypes -Wold-style-definition
+CFLAGS=-Ofast -lm -std=c99 -pedantic -Wall -Wextra -Wmissing-prototypes -Wstrict-prototypes -Wold-style-definition
 FILES=src/cretime.c
 MANDIR?=$(DESTDIR)$(PREFIX)/man
 PREFIX=/usr/local
